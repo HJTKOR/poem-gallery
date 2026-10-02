@@ -1,0 +1,1112 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>우리들의 시화 전시회 - 우리가 살고 있는 세상을 담아</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts (Gowun Batang & Noto Sans KR) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        gallery: {
+                            50: '#fcfaf7',
+                            100: '#f5efdf',
+                            200: '#ebd8be',
+                            800: '#433022',
+                            900: '#2b1e15'
+                        }
+                    },
+                    fontFamily: {
+                        poem: ['Gowun Batang', 'serif'],
+                        sans: ['Noto Sans KR', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            background-color: #fcfaf7;
+            color: #2b1e15;
+        }
+        .font-poem {
+            font-family: 'Gowun Batang', serif;
+        }
+        .paper-bg {
+            background-color: #fffdf9;
+            background-image: radial-gradient(#e5decf 0.75px, transparent 0.75px);
+            background-size: 16px 16px;
+        }
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1ebd9;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbbba0;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #ab987a;
+        }
+        @media print {
+            body { background: white !important; }
+            .no-print { display: none !important; }
+            .poem-card-print {
+                break-inside: avoid;
+                page-break-inside: avoid;
+            }
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col selection:bg-amber-200 selection:text-amber-900">
+
+    <!-- Navigation / Header -->
+    <header class="sticky top-0 z-30 bg-gallery-50/95 backdrop-blur-md border-b border-amber-900/10 shadow-sm no-print">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            <div class="flex items-center gap-3 cursor-pointer" onclick="resetFilters()">
+                <div class="w-11 h-11 rounded-2xl bg-amber-800 text-amber-50 flex items-center justify-center text-xl shadow-md">
+                    <i class="fa-solid fa-feather-pointed"></i>
+                </div>
+                <div>
+                    <h1 class="text-xl sm:text-2xl font-bold font-poem text-gallery-900 tracking-tight">우리들의 시화 전시회</h1>
+                    <p class="text-xs text-amber-800 font-medium">우리가 살고 있는 세상을 담아 🌸</p>
+                </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="flex items-center gap-2 sm:gap-3">
+                <button onclick="openSlideshow()" class="px-3 py-2 sm:px-4 sm:py-2.5 bg-amber-800 hover:bg-amber-900 text-amber-50 text-xs sm:text-sm font-medium rounded-xl shadow transition-all duration-200 flex items-center gap-2">
+                    <i class="fa-solid fa-play"></i>
+                    <span class="hidden sm:inline">온라인 도슨트 감상</span>
+                </button>
+                <button onclick="openSheetModal()" class="px-3 py-2 sm:px-4 sm:py-2.5 bg-white hover:bg-amber-50 text-amber-900 border border-amber-200 text-xs sm:text-sm font-medium rounded-xl shadow-sm transition flex items-center gap-2">
+                    <i class="fa-solid fa-file-csv text-green-700"></i>
+                    <span class="hidden sm:inline">구글시트 연동</span>
+                </button>
+                <button onclick="openAddModal()" class="px-3 py-2 sm:px-4 sm:py-2.5 bg-amber-100 hover:bg-amber-200 text-amber-900 text-xs sm:text-sm font-medium rounded-xl transition flex items-center gap-2">
+                    <i class="fa-solid fa-plus"></i>
+                    <span class="hidden sm:inline">작품 직접 등록</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Banner & Subtitle -->
+    <section class="bg-gradient-to-b from-amber-100/60 via-amber-50/40 to-transparent py-8 px-4 sm:px-6 text-center relative overflow-hidden no-print">
+        <div class="max-w-4xl mx-auto space-y-3">
+            <span class="inline-block px-3.5 py-1 bg-amber-200/80 text-amber-950 rounded-full text-xs font-semibold tracking-wide border border-amber-300">
+                학생 시화 전시 프로젝트
+            </span>
+            <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold font-poem text-amber-950 leading-tight">
+                우리들의 시화 전시회
+            </h2>
+            <p class="text-lg sm:text-xl font-medium font-poem text-amber-800">
+                "우리가 살고 있는 세상을 담아"
+            </p>
+        </div>
+
+        <!-- Mandatory Notice Banner (One-line Instruction) -->
+        <div class="max-w-3xl mx-auto mt-6 bg-amber-900/10 border border-amber-800/20 text-amber-950 px-4 py-3 rounded-2xl shadow-sm flex items-center justify-center gap-2 text-xs sm:text-sm font-medium">
+            <i class="fa-solid fa-circle-info text-amber-800"></i>
+            <span>사회문화적 상황을 이해하며 작품을 감상하고 감상평을 남겨주세요</span>
+        </div>
+    </section>
+
+    <!-- Search & Filter Controls -->
+    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2 no-print">
+        <div class="bg-white/80 backdrop-blur border border-amber-900/10 rounded-2xl p-4 shadow-sm flex flex-col md:flex-row gap-4 justify-between items-center">
+            
+            <!-- Tag Filters -->
+            <div class="flex flex-wrap items-center gap-2 w-full md:w-auto">
+                <span class="text-xs font-bold text-amber-900/70 mr-1 flex items-center gap-1">
+                    <i class="fa-solid fa-filter"></i> 주제별 보기:
+                </span>
+                <button onclick="setTag(null)" class="tag-badge text-xs px-3 py-1.5 rounded-xl bg-amber-800 text-white font-medium hover:bg-amber-900 transition">전체 보기</button>
+                <button onclick="setTag('환경/기후')" class="tag-badge text-xs px-3 py-1.5 rounded-xl bg-emerald-50 text-emerald-800 border border-emerald-200/60 hover:bg-emerald-100 transition">#환경/기후</button>
+                <button onclick="setTag('디지털세상')" class="tag-badge text-xs px-3 py-1.5 rounded-xl bg-sky-50 text-sky-800 border border-sky-200/60 hover:bg-sky-100 transition">#디지털세상</button>
+                <button onclick="setTag('공동체/다문화')" class="tag-badge text-xs px-3 py-1.5 rounded-xl bg-purple-50 text-purple-800 border border-purple-200/60 hover:bg-purple-100 transition">#공동체/다문화</button>
+                <button onclick="setTag('학교생활')" class="tag-badge text-xs px-3 py-1.5 rounded-xl bg-amber-50 text-amber-800 border border-amber-200/60 hover:bg-amber-100 transition">#학교생활</button>
+            </div>
+
+            <!-- Search Bar & Sort -->
+            <div class="flex items-center gap-3 w-full md:w-auto justify-end">
+                <div class="relative w-full md:w-64">
+                    <i class="fa-solid fa-magnifying-glass absolute left-3 top-1/2 -translate-y-1/2 text-amber-800/40 text-sm"></i>
+                    <input type="text" id="searchInput" oninput="handleSearch()" placeholder="성명, 시제목, 사회문화적배경 검색..." class="w-full pl-9 pr-4 py-2 bg-amber-50/50 border border-amber-200 rounded-xl text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-amber-700/30 text-amber-950 placeholder-amber-800/40">
+                </div>
+                
+                <select id="sortSelect" onchange="renderGallery()" class="py-2 px-3 bg-white border border-amber-200 rounded-xl text-xs sm:text-sm text-amber-900 focus:outline-none focus:ring-2 focus:ring-amber-700/30 font-medium">
+                    <option value="latest">최신순</option>
+                    <option value="likes">인기순 (좋아요)</option>
+                    <option value="title">제목순</option>
+                </select>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery Grid -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 flex-grow w-full">
+        <div id="galleryContainer" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+            <!-- Dynamic Cards inserted via JavaScript -->
+        </div>
+
+        <!-- Empty State -->
+        <div id="emptyState" class="hidden text-center py-20 bg-white/50 rounded-3xl border border-dashed border-amber-300">
+            <i class="fa-solid fa-box-open text-4xl text-amber-800/30 mb-3"></i>
+            <p class="text-base font-medium text-amber-900/70">조건에 일치하는 시화 작품이 없습니다.</p>
+            <button onclick="resetFilters()" class="mt-3 px-4 py-2 text-xs bg-amber-800 text-white rounded-xl hover:bg-amber-900 transition">전체 보기로 돌아가기</button>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-amber-900/10 border-t border-amber-900/10 py-8 px-4 text-center text-xs text-amber-900/70 no-print mt-12">
+        <div class="max-w-7xl mx-auto space-y-2">
+            <p class="font-poem text-base font-bold text-amber-950">🌸 우리들의 시화 전시회 - 우리가 살고 있는 세상을 담아</p>
+            <p>© Student Poetry & Art Exhibition.</p>
+            <p class="text-[11px] text-amber-800/60">작가의 사회문화적 배경을 이해하고 따뜻한 감상평을 나눠보세요.</p>
+        </div>
+    </footer>
+
+    <!-- DETAIL MODAL -->
+    <div id="detailModal" class="fixed inset-0 bg-black/70 backdrop-blur-sm z-50 flex items-center justify-center p-3 sm:p-6 hidden opacity-0 transition-opacity duration-300">
+        <div class="bg-gallery-50 rounded-3xl max-w-4xl w-full max-h-[92vh] overflow-hidden shadow-2xl flex flex-col md:flex-row border border-amber-200 relative">
+            
+            <button onclick="closeDetailModal()" class="absolute top-4 right-4 z-20 w-10 h-10 bg-white/80 backdrop-blur hover:bg-white text-slate-800 rounded-full shadow flex items-center justify-center transition">
+                <i class="fa-solid fa-xmark text-lg"></i>
+            </button>
+
+            <!-- Image Column -->
+            <div class="w-full md:w-1/2 bg-amber-950/5 relative flex items-center justify-center p-4 min-h-[280px] md:min-h-full">
+                <img id="modalImg" src="" alt="시화 이미지" class="max-h-[60vh] md:max-h-[75vh] w-auto object-contain rounded-2xl shadow-md border border-amber-900/10">
+                <div class="absolute bottom-4 left-4 bg-black/60 text-white text-[11px] px-3 py-1.5 rounded-full backdrop-blur flex items-center gap-1.5">
+                    <i class="fa-solid fa-paintbrush text-amber-300"></i>
+                    <span id="modalStudentLabel"></span>
+                </div>
+            </div>
+
+            <!-- Content Column -->
+            <div class="w-full md:w-1/2 p-6 sm:p-8 flex flex-col justify-between overflow-y-auto paper-bg">
+                <div>
+                    <div class="flex items-center justify-between mb-3">
+                        <span id="modalAuthorBadge" class="px-3 py-1 bg-amber-100 text-amber-900 text-xs font-semibold rounded-lg border border-amber-200 flex items-center gap-1">
+                            <i class="fa-solid fa-user-pen"></i> <span id="modalAuthorBadgeText"></span>
+                        </span>
+                        <button onclick="speakCurrentPoem()" class="px-3 py-1.5 bg-amber-800 hover:bg-amber-900 text-amber-50 rounded-xl text-xs font-medium flex items-center gap-1.5 shadow-sm transition">
+                            <i class="fa-solid fa-volume-high"></i>
+                            <span id="ttsBtnText">시 낭송 듣기</span>
+                        </button>
+                    </div>
+
+                    <h2 id="modalTitle" class="text-2xl sm:text-3xl font-bold font-poem text-amber-950 mb-1"></h2>
+                    <p id="modalAuthor" class="text-sm font-semibold text-amber-800 mb-4 pb-3 border-b border-amber-200/80"></p>
+
+                    <div class="bg-amber-100/60 border border-amber-800/15 rounded-2xl p-3.5 mb-5 space-y-1">
+                        <div class="flex items-center gap-1.5 text-xs font-bold text-amber-900">
+                            <i class="fa-solid fa-earth-americas text-amber-700"></i>
+                            <span>작가가 담고 싶었던 사회문화적 배경</span>
+                        </div>
+                        <p id="modalBackground" class="text-xs text-amber-950 leading-relaxed font-normal"></p>
+                    </div>
+
+                    <div class="my-4 py-2 px-1 border-l-2 border-amber-700/30 pl-4">
+                        <pre id="modalText" class="font-poem text-base sm:text-lg text-amber-950 leading-relaxed whitespace-pre-wrap tracking-wide font-normal"></pre>
+                    </div>
+
+                    <div id="modalTags" class="flex flex-wrap gap-1.5 my-4"></div>
+                </div>
+
+                <div class="mt-6 pt-4 border-t border-amber-200/80">
+                    <div class="flex items-center justify-between mb-4">
+                        <button id="modalLikeBtn" onclick="toggleLikeCurrent()" class="px-4 py-2 bg-rose-50 hover:bg-rose-100 border border-rose-200 text-rose-700 rounded-2xl text-xs sm:text-sm font-semibold flex items-center gap-2 transition">
+                            <i class="fa-solid fa-heart text-rose-500"></i>
+                            <span>응원해요</span>
+                            <span id="modalLikeCount" class="bg-rose-200 text-rose-800 text-[11px] px-2 py-0.5 rounded-full"></span>
+                        </button>
+
+                        <button onclick="window.print()" class="px-3 py-2 text-amber-800/70 hover:text-amber-900 text-xs font-medium flex items-center gap-1">
+                            <i class="fa-solid fa-print"></i> 인쇄
+                        </button>
+                    </div>
+
+                    <div class="space-y-3">
+                        <h4 class="text-xs font-bold text-amber-900/80 uppercase tracking-wider flex items-center gap-1">
+                            <i class="fa-solid fa-comments"></i> 감상평 / 응원 메시지
+                        </h4>
+                        
+                        <div id="commentsList" class="max-h-28 overflow-y-auto space-y-2 text-xs pr-1"></div>
+
+                        <div class="flex gap-2">
+                            <input type="text" id="commentAuthorInput" placeholder="작성자" class="w-1/4 px-2.5 py-1.5 bg-white border border-amber-200 rounded-xl text-xs focus:outline-none focus:ring-1 focus:ring-amber-700 text-amber-950">
+                            <input type="text" id="commentTextInput" placeholder="사회문화적 의미를 떠올리며 감상평을 입력하세요..." class="flex-grow px-3 py-1.5 bg-white border border-amber-200 rounded-xl text-xs focus:outline-none focus:ring-1 focus:ring-amber-700 text-amber-950">
+                            <button onclick="addCommentCurrent()" class="px-3 py-1.5 bg-amber-800 hover:bg-amber-900 text-white text-xs font-medium rounded-xl transition">등록</button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- VIRTUAL SLIDESHOW / DOCENT MODAL -->
+    <div id="slideshowModal" class="fixed inset-0 bg-slate-950 z-50 hidden flex flex-col justify-between p-4 sm:p-8 text-amber-50">
+        <div class="flex items-center justify-between z-10">
+            <div class="flex items-center gap-2">
+                <span class="w-3 h-3 rounded-full bg-rose-500 animate-pulse"></span>
+                <span class="text-xs font-semibold tracking-wider text-amber-200 uppercase">온라인 가상 도슨트 감상 모드</span>
+            </div>
+            <div class="flex items-center gap-3">
+                <button id="slideshowTtsToggle" onclick="toggleSlideshowTTS()" class="px-3 py-1.5 bg-amber-900/60 hover:bg-amber-800 border border-amber-700/50 rounded-xl text-xs flex items-center gap-2">
+                    <i class="fa-solid fa-volume-high"></i> Auto 시 낭송: <span id="slideshowTtsState">ON</span>
+                </button>
+                <button onclick="closeSlideshow()" class="w-10 h-10 rounded-full bg-amber-900/40 hover:bg-amber-800 flex items-center justify-center text-amber-100 transition">
+                    <i class="fa-solid fa-xmark text-lg"></i>
+                </button>
+            </div>
+        </div>
+
+        <div class="flex-grow flex flex-col md:flex-row items-center justify-center gap-8 max-w-6xl mx-auto w-full my-4 overflow-hidden">
+            <div class="w-full md:w-1/2 flex justify-center items-center h-[38vh] md:h-[65vh]">
+                <img id="slideImg" src="" alt="시화 이미지" class="max-h-full max-w-full object-contain rounded-2xl border border-amber-500/20 shadow-2xl">
+            </div>
+            <div class="w-full md:w-1/2 space-y-4 max-h-[42vh] md:max-h-[65vh] overflow-y-auto pr-2">
+                <div class="inline-block px-3 py-1 bg-amber-800/40 text-amber-300 text-xs rounded-full border border-amber-700/40" id="slideAuthorInfo"></div>
+                <h2 id="slideTitle" class="text-3xl md:text-4xl font-bold font-poem text-amber-100"></h2>
+                <p id="slideAuthor" class="text-sm font-semibold text-amber-300/80"></p>
+                
+                <div class="bg-amber-900/30 border border-amber-700/40 p-3 rounded-xl text-xs text-amber-200/90 space-y-1">
+                    <p class="font-bold text-amber-300"><i class="fa-solid fa-earth-americas"></i> 사회문화적 배경:</p>
+                    <p id="slideBackground"></p>
+                </div>
+
+                <div class="py-3 border-t border-b border-amber-800/40">
+                    <pre id="slideText" class="font-poem text-base md:text-xl text-amber-100/90 leading-relaxed whitespace-pre-wrap"></pre>
+                </div>
+            </div>
+        </div>
+
+        <div class="max-w-xl mx-auto w-full flex items-center justify-between bg-amber-950/60 border border-amber-800/40 px-6 py-3 rounded-2xl backdrop-blur">
+            <button onclick="prevSlide()" class="w-10 h-10 rounded-xl bg-amber-900/60 hover:bg-amber-800 flex items-center justify-center text-amber-100 transition">
+                <i class="fa-solid fa-chevron-left"></i>
+            </button>
+            <div class="text-xs font-mono text-amber-300/80" id="slideCounter">1 / 1</div>
+            <button onclick="nextSlide()" class="w-10 h-10 rounded-xl bg-amber-900/60 hover:bg-amber-800 flex items-center justify-center text-amber-100 transition">
+                <i class="fa-solid fa-chevron-right"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- GOOGLE SHEETS LINK MODAL -->
+    <div id="sheetModal" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+        <div class="bg-white rounded-3xl max-w-lg w-full p-6 sm:p-8 shadow-2xl space-y-6 border border-amber-200">
+            <div class="flex justify-between items-center border-b border-slate-100 pb-3">
+                <h3 class="text-lg font-bold text-amber-950 flex items-center gap-2">
+                    <i class="fa-solid fa-file-csv text-green-700"></i> 구글 시트 연동 설정
+                </h3>
+                <button onclick="closeSheetModal()" class="text-slate-400 hover:text-slate-600">
+                    <i class="fa-solid fa-xmark text-lg"></i>
+                </button>
+            </div>
+
+            <div class="space-y-3 text-xs sm:text-sm text-amber-900/80">
+                <p class="font-semibold text-amber-950">💡 구글 시트 연동 순서:</p>
+                <ol class="list-decimal list-inside space-y-1.5 pl-1 text-xs text-slate-600">
+                    <li>구글 시트에서 <span class="font-bold text-amber-900">[파일] &gt; [공유] &gt; [웹에 게시]</span> 클릭</li>
+                    <li>[링크] 탭에서 [쉼표로 구분된 값(.csv)] 선택 후 <span class="font-bold text-amber-900">[게시]</span> 클릭</li>
+                    <li>생성된 CSV URL을 아래에 입력해 주시면 모든 작품이 실시간 업데이트됩니다!</li>
+                </ol>
+                <div class="p-3 bg-amber-50 rounded-xl border border-amber-200/70 text-[11px] text-amber-900 font-mono">
+                    헤더열 구성 순서 (6개 열): <br>
+                    <strong>성명 | 제목 | 내가 담은 사회문화적 배경 | 시 | 시화 | 관련단어</strong>
+                </div>
+            </div>
+
+            <div class="space-y-2">
+                <label class="block text-xs font-bold text-amber-950">구글 시트 CSV URL</label>
+                <input type="url" id="sheetUrlInput" placeholder="https://docs.google.com/spreadsheets/d/e/.../pub?output=csv" class="w-full px-3.5 py-2.5 border border-amber-300 rounded-xl text-xs focus:outline-none focus:ring-2 focus:ring-amber-700 text-amber-950">
+            </div>
+
+            <div class="flex justify-end gap-2 pt-2">
+                <button onclick="downloadCSVTemplate()" class="px-4 py-2 bg-amber-100 hover:bg-amber-200 text-amber-900 text-xs font-medium rounded-xl transition">
+                    <i class="fa-solid fa-download mr-1"></i> 양식 다운로드
+                </button>
+                <button onclick="loadGoogleSheetData()" class="px-5 py-2 bg-amber-800 hover:bg-amber-900 text-white text-xs font-medium rounded-xl transition">
+                    동기화 실행
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ADD POEM MODAL -->
+    <div id="addModal" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+        <div class="bg-white rounded-3xl max-w-lg w-full p-6 sm:p-8 shadow-2xl space-y-4 border border-amber-200 max-h-[90vh] overflow-y-auto">
+            <div class="flex justify-between items-center border-b border-slate-100 pb-3">
+                <h3 class="text-lg font-bold text-amber-950 flex items-center gap-2">
+                    <i class="fa-solid fa-plus-circle text-amber-800"></i> 새 작품 직접 등록
+                </h3>
+                <button onclick="closeAddModal()" class="text-slate-400 hover:text-slate-600">
+                    <i class="fa-solid fa-xmark text-lg"></i>
+                </button>
+            </div>
+
+            <form id="addPoemForm" onsubmit="handleAddPoem(event)" class="space-y-3 text-xs sm:text-sm">
+                <div>
+                    <label class="block font-medium text-amber-900 mb-1">성명 (작가 이름)</label>
+                    <input type="text" id="addAuthor" required placeholder="예: 김민준" class="w-full px-3 py-2 border border-amber-200 rounded-xl text-xs focus:outline-none focus:ring-1 focus:ring-amber-700">
+                </div>
+                <div>
+                    <label class="block font-medium text-amber-900 mb-1">제목</label>
+                    <input type="text" id="addTitle" required placeholder="예: 스마트폰 속에 갇힌 우리" class="w-full px-3 py-2 border border-amber-200 rounded-xl text-xs focus:outline-none focus:ring-1 focus:ring-amber-700">
+                </div>
+                <div>
+                    <label class="block font-medium text-amber-900 mb-1">내가 담은 사회문화적 배경</label>
+                    <textarea id="addBackground" rows="2" required placeholder="예: 현대 사회의 지나친 스마트폰 의존과 대면 대화의 감소 현실을 표현하고자 함" class="w-full px-3 py-2 border border-amber-200 rounded-xl text-xs focus:outline-none focus:ring-1 focus:ring-amber-700"></textarea>
+                </div>
+                <div>
+                    <label class="block font-medium text-amber-900 mb-1">시 (본문)</label>
+                    <textarea id="addText" rows="4" required placeholder="시 구절을 입력하세요..." class="w-full px-3 py-2 border border-amber-200 rounded-xl text-xs focus:outline-none focus:ring-1 focus:ring-amber-700 font-poem"></textarea>
+                </div>
+
+                <!-- 시화(이미지) 선택/업로드/AI생성 섹션 -->
+                <div class="space-y-2 pt-1">
+                    <label class="block font-bold text-amber-950">시화 이미지 설정</label>
+                    
+                    <!-- 이미지 방식 선택 탭 -->
+                    <div class="flex border-b border-amber-200 gap-1 text-xs font-medium">
+                        <button type="button" onclick="switchImgTab('upload')" id="tabBtnUpload" class="px-3 py-2 border-b-2 border-amber-800 text-amber-900 font-bold transition">
+                            <i class="fa-solid fa-upload mr-1"></i> 파일 업로드
+                        </button>
+                        <button type="button" onclick="switchImgTab('ai')" id="tabBtnAi" class="px-3 py-2 border-b-2 border-transparent text-amber-800/60 hover:text-amber-900 transition">
+                            <i class="fa-solid fa-wand-magic-sparkles mr-1 text-purple-600"></i> AI 시화 생성
+                        </button>
+                        <button type="button" onclick="switchImgTab('url')" id="tabBtnUrl" class="px-3 py-2 border-b-2 border-transparent text-amber-800/60 hover:text-amber-900 transition">
+                            <i class="fa-solid fa-link mr-1"></i> URL 입력
+                        </button>
+                    </div>
+
+                    <!-- 1. 파일 업로드 패널 -->
+                    <div id="panelUpload" class="space-y-2 py-2">
+                        <div class="border-2 border-dashed border-amber-300 rounded-2xl p-4 text-center bg-amber-50/50 hover:bg-amber-50 transition cursor-pointer" onclick="document.getElementById('addFileImg').click()">
+                            <i class="fa-solid fa-cloud-arrow-up text-2xl text-amber-800/50 mb-1"></i>
+                            <p class="text-xs text-amber-900 font-medium">클릭하여 내 컴퓨터에서 그림/사진 파일 선택</p>
+                            <p class="text-[11px] text-amber-800/50">PNG, JPG, WEBP 지원</p>
+                        </div>
+                        <input type="file" id="addFileImg" accept="image/*" onchange="handleFileSelect(event)" class="hidden">
+                    </div>
+
+                    <!-- 2. AI 생성 패널 -->
+                    <div id="panelAi" class="space-y-2 py-2 hidden">
+                        <div class="bg-purple-50/70 border border-purple-200 p-3 rounded-2xl space-y-2">
+                            <div class="flex items-center justify-between">
+                                <span class="text-xs font-bold text-purple-950 flex items-center gap-1">
+                                    <i class="fa-solid fa-robot text-purple-600"></i> AI 그림 프롬프트
+                                </span>
+                                <button type="button" onclick="fillAutoAiPrompt()" class="text-[11px] text-purple-700 hover:underline font-medium">
+                                    <i class="fa-solid fa-lightbulb"></i> 시 제목 기반 프롬프트 자동 작성
+                                </button>
+                            </div>
+                            <input type="text" id="aiPromptInput" placeholder="예: 따뜻한 수채화 느낌으로 스마트폰을 바라보는 소년의 모습" class="w-full px-3 py-2 bg-white border border-purple-200 rounded-xl text-xs focus:outline-none focus:ring-1 focus:ring-purple-600 text-purple-950">
+                            
+                            <button type="button" id="generateAiBtn" onclick="generateAiArtwork()" class="w-full py-2 bg-gradient-to-r from-purple-700 to-amber-800 hover:from-purple-800 hover:to-amber-900 text-white font-medium rounded-xl text-xs flex items-center justify-center gap-2 shadow transition">
+                                <i class="fa-solid fa-wand-magic-sparkles"></i>
+                                <span>Gemini AI로 시화 그리기</span>
+                            </button>
+                        </div>
+
+                        <!-- AI 로딩 애니메이션 -->
+                        <div id="aiLoading" class="hidden py-4 text-center space-y-2 bg-purple-50/30 rounded-2xl border border-purple-100">
+                            <div class="inline-block animate-spin text-purple-700 text-2xl">
+                                <i class="fa-solid fa-circle-notch"></i>
+                            </div>
+                            <p class="text-xs font-bold text-purple-900">AI가 아름다운 시화를 생성하고 있습니다...</p>
+                            <p class="text-[11px] text-purple-700/70">잠시만 기다려주세요 (약 3~8초 소요)</p>
+                        </div>
+                    </div>
+
+                    <!-- 3. URL 입력 패널 -->
+                    <div id="panelUrl" class="space-y-2 py-2 hidden">
+                        <input type="url" id="addImg" placeholder="https://images.unsplash.com/..." oninput="handleUrlInput(event)" class="w-full px-3 py-2 border border-amber-200 rounded-xl text-xs focus:outline-none focus:ring-1 focus:ring-amber-700">
+                    </div>
+
+                    <!-- 이미지 미리보기 박스 -->
+                    <div id="imgPreviewContainer" class="hidden relative border border-amber-200 rounded-2xl p-2 bg-amber-50/30 flex items-center gap-3">
+                        <img id="imgPreview" src="" alt="시화 미리보기" class="w-16 h-16 object-cover rounded-xl border border-amber-300">
+                        <div class="flex-grow overflow-hidden text-xs">
+                            <p class="font-bold text-amber-950 flex items-center gap-1">
+                                <i class="fa-solid fa-image text-amber-700"></i> 선택된 이미지
+                            </p>
+                            <p id="imgPreviewSource" class="text-[11px] text-amber-800/70 truncate">로컬 업로드 파일</p>
+                        </div>
+                        <button type="button" onclick="clearSelectedImg()" class="p-2 text-rose-600 hover:bg-rose-50 rounded-xl transition">
+                            <i class="fa-solid fa-trash-can"></i>
+                        </button>
+                    </div>
+
+                    <p class="text-[11px] text-amber-800/60">이미지를 지정하지 않으면 서정적인 기본 시화가 자동 적용됩니다.</p>
+                </div>
+
+                <div>
+                    <label class="block font-medium text-amber-900 mb-1">관련단어 (태그 - 쉼표로 구분)</label>
+                    <input type="text" id="addTags" placeholder="예: 디지털세상, 환경/기후, 학교생활" class="w-full px-3 py-2 border border-amber-200 rounded-xl text-xs focus:outline-none focus:ring-1 focus:ring-amber-700">
+                </div>
+
+                <div class="flex justify-end gap-2 pt-3">
+                    <button type="button" onclick="closeAddModal()" class="px-4 py-2 bg-slate-100 text-slate-600 rounded-xl text-xs font-medium">취소</button>
+                    <button type="submit" class="px-5 py-2 bg-amber-800 hover:bg-amber-900 text-white rounded-xl text-xs font-medium transition">등록하기</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Notification Toast -->
+    <div id="toast" class="fixed bottom-6 right-6 bg-slate-900 text-white text-xs px-4 py-3 rounded-2xl shadow-xl transition-all duration-300 opacity-0 translate-y-4 pointer-events-none z-50 flex items-center gap-2">
+        <i class="fa-solid fa-circle-check text-green-400"></i>
+        <span id="toastMsg">알림 메시지</span>
+    </div>
+
+    <script>
+        // Default Sample Student Poems
+        const defaultPoems = [
+            {
+                id: "p1",
+                author: "김소율",
+                title: "지구가 흘리는 파란 눈물",
+                background: "최근 극심해진 이상기후 현상과 해수면 상승 문제로 위기에 처한 동식물과 환경 파괴의 심각성을 알리고자 함.",
+                text: "북극곰이 서 있는 작은 얼음조각\n점점 좁아지는 흰 무대 위에서\n소년처럼 슬픈 눈으로 하늘을 본다.\n\n우리가 켜둔 전등 하나,\n쉽게 버린 플라스틱 컵 하나가\n북극의 집을 녹이고 있었다는 걸.\n\n지구가 흘리는 파란 눈물을\n이제는 우리가 닦아줄 때.",
+                img: "https://images.unsplash.com/photo-1518173946687-a4c8a383392e?auto=format&fit=crop&w=800&q=80",
+                tags: ["환경/기후", "자연", "지구보호"],
+                likes: 19,
+                comments: [
+                    { author: "선생님", text: "기후 위기 문제를 북극곰의 시선에서 너무나 감동적으로 표현했네요! 🌍" },
+                    { author: "이준호", text: "플라스틱 줄이기를 실천해야겠다고 느꼈어." }
+                ]
+            },
+            {
+                id: "p2",
+                author: "박지호",
+                title: "고개 숙인 버스정류장",
+                text: "버스를 기다리는 사람들\n모두 약속이라도 한 듯\n작은 네모 상자 속으로 고개를 숙인다.\n\n옆 사람의 미소도,\n노을 지는 주황빛 하늘도 보지 못한 채\n파란 빛 화면만 지켜보는 밤.\n\n진짜 세상은\n우리 눈앞에서 따뜻하게 숨 쉬고 있는데.",
+                background: "스마트폰과 SNS의 보편화로 인해 타인과의 실제 눈맞춤과 대화가 줄어든 현대 디지털 사회의 단절을 성찰함.",
+                img: "https://images.unsplash.com/photo-1512428559087-560fa5ceab42?auto=format&fit=crop&w=800&q=80",
+                tags: ["디지털세상", "현대사회", "소통"],
+                likes: 24,
+                comments: [
+                    { author: "최유진", text: "버스를 기다릴 때 내 모습을 돌아보게 되었어. 깊은 울림을 주는 시야!" }
+                ]
+            },
+            {
+                id: "p3",
+                author: "이하은",
+                title: "서로 다른 색깔의 무지개 다리",
+                background: "다문화 가정이 증가하는 우리 사회에서 서로 다른 배경을 가진 이웃들이 이질감을 넘어 함께 어우러지는 공동체 모습을 소망함.",
+                text: "우리 반 냐트의 피부는 다정한 빵 빛깔\n나오미의 눈동자는 깊은 밤하늘 빛.\n\n말투는 조금 달라도\n같이 공을 차며 웃을 땐\n우리는 모두 똑같은 친구.\n\n빨주노초파남보\n서로 달라서 더 눈부신 무지개처럼\n우리는 함께 어울려 예쁜 세상을 만든다.",
+                img: "https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=800&q=80",
+                tags: ["공동체/다문화", "우정", "희망"],
+                likes: 31,
+                comments: [
+                    { author: "엄마", text: "다양성을 존중하는 우리 하은이의 예쁜 마음이 느껴지는구나!" }
+                ]
+            },
+            {
+                id: "p4",
+                author: "최현우",
+                title: "인공지능 교실",
+                background: "AI와 디지털 기기가 급격히 도입되는 미래 교육 환경 속에서도 인간적인 교감과 따뜻한 체온의 가치가 변하지 않음을 표현함.",
+                text: "버튼을 누르면 정답을 바로 말하는 로봇,\n질문마다 척척 답해주는 모니터 화면.\n\n하지만 내가 슬퍼 눈물 흘릴 때\n가만히 어깨를 다독여주는 건\n친구의 따뜻한 손길이었다.\n\n아무리 똑똑한 AI가 나와도\n우리 사이의 온기까진 따라 할 수 없겠지.",
+                img: "https://images.unsplash.com/photo-1485827404703-89b55fcc595e?auto=format&fit=crop&w=800&q=80",
+                tags: ["디지털세상", "학교생활"],
+                likes: 16,
+                comments: []
+            },
+            {
+                id: "p5",
+                author: "윤서연",
+                title: "할머니의 옛날이야기와 배달 앱",
+                background: "초고속 디지털 사회 속에서 잊혀 가는 할머니의 따뜻한 손맛과 대가족 간의 정겨운 옛 기억을 회상함.",
+                text: "띵동! 문 앞에 놓인 차가운 플라스틱 용기\n버튼 몇 번으로 음식이 오지만\n\n푹 고아주신 할머니의 따뜻한 된장국 냄새와\n'밥 많이 먹어라' 하시던 목소리가 그립다.\n\n빠른 것만 찾아 달리는 요즘,\n느릿해도 정겨웠던 그 시절의 온기가 그립다.",
+                img: "https://images.unsplash.com/photo-1506703719100-a0f3a48c0f86?auto=format&fit=crop&w=800&q=80",
+                tags: ["현대사회", "가족"],
+                likes: 21,
+                comments: []
+            }
+        ];
+
+        // State variables
+        let poemsData = JSON.parse(localStorage.getItem('poemsData_v4')) || defaultPoems;
+        let activeTag = null;
+        let searchQuery = '';
+        let currentPoemId = null;
+        let slideshowIndex = 0;
+        let slideshowTTS = true;
+
+        // Image selection mode state
+        let currentImgMode = 'upload'; // 'upload' | 'ai' | 'url'
+        let selectedImgData = ''; // Base64 data or image URL
+
+        function switchImgTab(mode) {
+            currentImgMode = mode;
+            
+            const btnUpload = document.getElementById('tabBtnUpload');
+            const btnAi = document.getElementById('tabBtnAi');
+            const btnUrl = document.getElementById('tabBtnUrl');
+
+            const pUpload = document.getElementById('panelUpload');
+            const pAi = document.getElementById('panelAi');
+            const pUrl = document.getElementById('panelUrl');
+
+            // Reset tabs
+            [btnUpload, btnAi, btnUrl].forEach(btn => {
+                btn.className = "px-3 py-2 border-b-2 border-transparent text-amber-800/60 hover:text-amber-900 transition";
+            });
+            [pUpload, pAi, pUrl].forEach(panel => panel.classList.add('hidden'));
+
+            if (mode === 'upload') {
+                btnUpload.className = "px-3 py-2 border-b-2 border-amber-800 text-amber-900 font-bold transition";
+                pUpload.classList.remove('hidden');
+            } else if (mode === 'ai') {
+                btnAi.className = "px-3 py-2 border-b-2 border-purple-700 text-purple-900 font-bold transition";
+                pAi.classList.remove('hidden');
+            } else if (mode === 'url') {
+                btnUrl.className = "px-3 py-2 border-b-2 border-amber-800 text-amber-900 font-bold transition";
+                pUrl.classList.remove('hidden');
+            }
+        }
+
+        function setPreviewImage(src, sourceLabel) {
+            selectedImgData = src;
+            const container = document.getElementById('imgPreviewContainer');
+            const imgEl = document.getElementById('imgPreview');
+            const sourceEl = document.getElementById('imgPreviewSource');
+
+            if (src) {
+                imgEl.src = src;
+                sourceEl.textContent = sourceLabel || '선택된 시화 이미지';
+                container.classList.remove('hidden');
+            } else {
+                container.classList.add('hidden');
+            }
+        }
+
+        function clearSelectedImg() {
+            selectedImgData = '';
+            document.getElementById('imgPreviewContainer').classList.add('hidden');
+            document.getElementById('addFileImg').value = '';
+            document.getElementById('addImg').value = '';
+            showToast('지정된 이미지가 해제되었습니다.');
+        }
+
+        function handleFileSelect(e) {
+            const file = e.target.files[0];
+            if (!file) return;
+
+            if (!file.type.startsWith('image/')) {
+                showToast('이미지 파일(PNG, JPG 등)만 업로드할 수 있습니다.');
+                return;
+            }
+
+            const reader = new FileReader();
+            reader.onload = function(event) {
+                const base64Data = event.target.result;
+                setPreviewImage(base64Data, `로컬 파일: ${file.name}`);
+                showToast('이미지 파일이 성공적으로 로드되었습니다.');
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function handleUrlInput(e) {
+            const url = e.target.value.trim();
+            if (url) {
+                setPreviewImage(url, '웹 이미지 URL');
+            } else {
+                clearSelectedImg();
+            }
+        }
+
+        function fillAutoAiPrompt() {
+            const title = document.getElementById('addTitle').value.trim();
+            const background = document.getElementById('addBackground').value.trim();
+            const poemText = document.getElementById('addText').value.trim();
+
+            if (!title && !poemText) {
+                showToast('먼저 시 제목이나 본문을 입력하시면 맞춤형 프롬프트가 생성됩니다.');
+                return;
+            }
+
+            let prompt = `서정적이고 아름다운 한국 시화 일러스트: '${title}'`;
+            if (background) {
+                prompt += `, 주제 배경: ${background}`;
+            }
+            prompt += `, 따뜻한 수채화 회화 스타일, 감성적 표현`;
+
+            document.getElementById('aiPromptInput').value = prompt;
+            showToast('시 내용을 기반으로 프롬프트가 작성되었습니다! ✨');
+        }
+
+        async function generateAiArtwork() {
+            let promptText = document.getElementById('aiPromptInput').value.trim();
+
+            if (!promptText) {
+                fillAutoAiPrompt();
+                promptText = document.getElementById('aiPromptInput').value.trim();
+            }
+
+            if (!promptText) {
+                showToast('AI 시화를 그리기 위한 프롬프트나 시 제목을 입력해주세요.');
+                return;
+            }
+
+            const aiBtn = document.getElementById('generateAiBtn');
+            const loadingBox = document.getElementById('aiLoading');
+
+            aiBtn.disabled = true;
+            aiBtn.classList.add('opacity-50', 'cursor-not-allowed');
+            loadingBox.classList.remove('hidden');
+
+            try {
+                // Gemini 3.1 Flash Image API Endpoint
+                const apiKey = ""; // API Key handled automatically in runtime environment
+                const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3.1-flash-image:generateContent?key=${apiKey}`;
+
+                const systemInstruction = "You are a master Korean poetry illustrator. Generate expressive, poetic, high-quality illustrations that match the emotional tone and social context of Korean student poetry. Soft water-color or acrylic art style.";
+                
+                const payload = {
+                    contents: [{
+                        role: 'user',
+                        parts: [{ text: `${systemInstruction}\n\nIllustrate this poetry scene: ${promptText}` }]
+                    }],
+                    generationConfig: {
+                        responseModalities: ['IMAGE'],
+                        imageConfig: {
+                            aspectRatio: "1:1"
+                        }
+                    }
+                };
+
+                const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                if (!response.ok) {
+                    throw new Error(`API 요청 실패 (코드: ${response.status})`);
+                }
+
+                const result = await response.json();
+                const part = result?.candidates?.[0]?.content?.parts?.find(p => p.inlineData);
+
+                if (part && part.inlineData) {
+                    const mimeType = part.inlineData.mimeType || 'image/png';
+                    const base64Img = `data:${mimeType};base64,${part.inlineData.data}`;
+                    
+                    setPreviewImage(base64Img, `AI 생성 시화: "${promptText.substring(0, 15)}..."`);
+                    showToast('🎉 Gemini AI가 멋진 시화를 완성했습니다!');
+                } else {
+                    throw new Error('이미지 데이터를 생성받지 못했습니다.');
+                }
+
+            } catch (err) {
+                console.error(err);
+                showToast('AI 시화 생성 실패. 일시적 오류이거나 네트워크 상태를 확인해주세요.');
+            } finally {
+                aiBtn.disabled = false;
+                aiBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+                loadingBox.classList.add('hidden');
+            }
+        }
+
+        function createPoemCard(poem) {
+            const div = document.createElement('div');
+            div.className = "group bg-white rounded-2xl border border-amber-900/10 shadow-sm hover:shadow-xl transition-all duration-300 overflow-hidden flex flex-col justify-between cursor-pointer transform hover:-translate-y-1 poem-card-print";
+            
+            const tagsHtml = (poem.tags || []).map(t => 
+                `<span class="text-[10px] px-2 py-0.5 bg-amber-100/70 text-amber-900 rounded-md">#${t}</span>`
+            ).join(' ');
+
+            div.innerHTML = `
+                <div>
+                    <div class="relative h-48 sm:h-52 overflow-hidden bg-amber-100/50">
+                        <img src="${poem.img || 'https://images.unsplash.com/photo-1579783900882-c0d3dad7b119?auto=format&fit=crop&w=800&q=80'}" 
+                             alt="${poem.title}" 
+                             class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                             onerror="this.src='https://images.unsplash.com/photo-1579783900882-c0d3dad7b119?auto=format&fit=crop&w=800&q=80'">
+                        
+                        <div class="absolute bottom-3 right-3 bg-black/60 backdrop-blur text-white text-xs px-2.5 py-1 rounded-full flex items-center gap-1">
+                            <i class="fa-solid fa-heart text-rose-400 text-[10px]"></i> ${poem.likes || 0}
+                        </div>
+                    </div>
+
+                    <div class="p-5 space-y-2">
+                        <h3 class="text-lg font-bold font-poem text-amber-950 group-hover:text-amber-700 transition line-clamp-1">${poem.title}</h3>
+                        <p class="text-xs font-semibold text-amber-800/90 flex items-center gap-1">
+                            <i class="fa-solid fa-feather text-amber-700"></i> 작가: <span class="font-bold text-amber-950">${poem.author}</span>
+                        </p>
+                        
+                        <div class="p-2 bg-amber-50/80 rounded-xl border border-amber-200/50 text-[11px] text-amber-900 line-clamp-2">
+                            <span class="font-bold text-amber-800"><i class="fa-solid fa-earth-americas text-[10px]"></i> 배경:</span> ${poem.background || '사회문화적 배경 미기재'}
+                        </div>
+
+                        <p class="font-poem text-xs text-amber-900/70 line-clamp-2 leading-relaxed pt-1">
+                            ${poem.text}
+                        </p>
+                    </div>
+                </div>
+
+                <div class="px-5 pb-4 pt-1 flex items-center justify-between border-t border-slate-50">
+                    <div class="flex flex-wrap gap-1">
+                        ${tagsHtml}
+                    </div>
+                    <span class="text-xs font-semibold text-amber-800 flex items-center gap-1 group-hover:translate-x-1 transition-transform">
+                        감상하기 <i class="fa-solid fa-arrow-right text-[10px]"></i>
+                    </span>
+                </div>
+            `;
+
+            div.onclick = () => openDetailModal(poem.id);
+            return div;
+        }
+
+        // Modal Control Functions
+        function openSheetModal() {
+            document.getElementById('sheetModal').classList.remove('hidden');
+        }
+
+        function closeSheetModal() {
+            document.getElementById('sheetModal').classList.add('hidden');
+        }
+
+        function openAddModal() {
+            document.getElementById('addModal').classList.remove('hidden');
+        }
+
+        function closeAddModal() {
+            document.getElementById('addModal').classList.add('hidden');
+        }
+
+        function openDetailModal(id) {
+            const poem = poemsData.find(p => p.id === id);
+            if (!poem) return;
+
+            currentPoemId = id;
+            document.getElementById('modalImg').src = poem.img || 'https://images.unsplash.com/photo-1579783900882-c0d3dad7b119?auto=format&fit=crop&w=800&q=80';
+            document.getElementById('modalStudentLabel').textContent = `${poem.author} 작가의 시화`;
+            document.getElementById('modalAuthorBadgeText').textContent = poem.author;
+            document.getElementById('modalTitle').textContent = poem.title;
+            document.getElementById('modalAuthor').textContent = `작가: ${poem.author}`;
+            document.getElementById('modalBackground').textContent = poem.background || '작가가 작성한 사회문화적 배경 설명이 준비 중입니다.';
+            document.getElementById('modalText').textContent = poem.text;
+            document.getElementById('modalLikeCount').textContent = poem.likes || 0;
+
+            const tagsDiv = document.getElementById('modalTags');
+            tagsDiv.innerHTML = (poem.tags || []).map(t => `<span class="px-2.5 py-1 bg-amber-100/80 text-amber-900 rounded-lg text-xs font-medium">#${t}</span>`).join('');
+
+            renderComments(poem);
+
+            const modal = document.getElementById('detailModal');
+            modal.classList.remove('hidden');
+            setTimeout(() => modal.classList.remove('opacity-0'), 10);
+        }
+
+        function closeDetailModal() {
+            const modal = document.getElementById('detailModal');
+            modal.classList.add('opacity-0');
+            if ('speechSynthesis' in window) {
+                window.speechSynthesis.cancel();
+            }
+            setTimeout(() => modal.classList.add('hidden'), 300);
+        }
+
+        function openSlideshow() {
+            if (poemsData.length === 0) {
+                showToast('감상할 시화 작품이 없습니다.');
+                return;
+            }
+            slideshowIndex = 0;
+            document.getElementById('slideshowModal').classList.remove('hidden');
+            updateSlideView();
+        }
+
+        function closeSlideshow() {
+            document.getElementById('slideshowModal').classList.add('hidden');
+            if ('speechSynthesis' in window) {
+                window.speechSynthesis.cancel();
+            }
+        }
+
+        function toggleSlideshowTTS() {
+            slideshowTTS = !slideshowTTS;
+            document.getElementById('slideshowTtsState').textContent = slideshowTTS ? 'ON' : 'OFF';
+            showToast(`Auto 시 낭송 기능이 ${slideshowTTS ? '켜졌습니다' : '꺼졌습니다'}.`);
+            if (!slideshowTTS && 'speechSynthesis' in window) {
+                window.speechSynthesis.cancel();
+            } else if (slideshowTTS) {
+                updateSlideView();
+            }
+        }
+
+        function prevSlide() {
+            slideshowIndex = (slideshowIndex - 1 + poemsData.length) % poemsData.length;
+            updateSlideView();
+        }
+
+        function nextSlide() {
+            slideshowIndex = (slideshowIndex + 1) % poemsData.length;
+            updateSlideView();
+        }
+
+        function updateSlideView() {
+            const poem = poemsData[slideshowIndex];
+            if (!poem) return;
+
+            document.getElementById('slideImg').src = poem.img || 'https://images.unsplash.com/photo-1579783900882-c0d3dad7b119?auto=format&fit=crop&w=800&q=80';
+            document.getElementById('slideAuthorInfo').textContent = `작가 ${poem.author}`;
+            document.getElementById('slideTitle').textContent = poem.title;
+            document.getElementById('slideAuthor').textContent = `작품 번호: ${slideshowIndex + 1}`;
+            document.getElementById('slideBackground').textContent = poem.background || '사회문화적 배경 설명 미입력';
+            document.getElementById('slideText').textContent = poem.text;
+            document.getElementById('slideCounter').textContent = `${slideshowIndex + 1} / ${poemsData.length}`;
+
+            if (slideshowTTS && 'speechSynthesis' in window) {
+                window.speechSynthesis.cancel();
+                const utterance = new SpeechSynthesisUtterance(`${poem.title}. 작가 ${poem.author}. ${poem.text}`);
+                utterance.lang = 'ko-KR';
+                utterance.rate = 0.85;
+                window.speechSynthesis.speak(utterance);
+            }
+        }
+
+        function speakCurrentPoem() {
+            const poem = poemsData.find(p => p.id === currentPoemId);
+            if (!poem) return;
+
+            if ('speechSynthesis' in window) {
+                if (window.speechSynthesis.speaking) {
+                    window.speechSynthesis.cancel();
+                    document.getElementById('ttsBtnText').textContent = '시 낭송 듣기';
+                    showToast('시 낭송을 멈췄습니다.');
+                } else {
+                    const utterance = new SpeechSynthesisUtterance(`${poem.title}. 작가 ${poem.author}. ${poem.text}`);
+                    utterance.lang = 'ko-KR';
+                    utterance.rate = 0.85;
+                    utterance.onend = () => {
+                        document.getElementById('ttsBtnText').textContent = '시 낭송 듣기';
+                    };
+                    window.speechSynthesis.speak(utterance);
+                    document.getElementById('ttsBtnText').textContent = '낭송 정지';
+                    showToast('시 낭송을 시작합니다 🎵');
+                }
+            } else {
+                showToast('사용 중인 브라우저가 음성합성(TTS)을 지원하지 않습니다.');
+            }
+        }
+
+        function toggleLikeCurrent() {
+            const poem = poemsData.find(p => p.id === currentPoemId);
+            if (!poem) return;
+
+            poem.likes = (poem.likes || 0) + 1;
+            document.getElementById('modalLikeCount').textContent = poem.likes;
+            saveAndSyncData();
+            renderGallery();
+            showToast('작품을 응원하셨습니다! ❤️');
+        }
+
+        function renderComments(poem) {
+            const list = document.getElementById('commentsList');
+            list.innerHTML = '';
+            if (!poem.comments || poem.comments.length === 0) {
+                list.innerHTML = `<p class="text-slate-400 italic text-[11px]">첫 번째 감상평을 남겨주세요!</p>`;
+                return;
+            }
+            poem.comments.forEach(c => {
+                const item = document.createElement('div');
+                item.className = "p-2 bg-amber-100/50 rounded-xl border border-amber-200/40";
+                item.innerHTML = `<span class="font-bold text-amber-950">${c.author || '익명'}:</span> <span class="text-amber-900">${c.text}</span>`;
+                list.appendChild(item);
+            });
+        }
+
+        function addCommentCurrent() {
+            const poem = poemsData.find(p => p.id === currentPoemId);
+            if (!poem) return;
+
+            const authorInput = document.getElementById('commentAuthorInput');
+            const textInput = document.getElementById('commentTextInput');
+
+            const author = authorInput.value.trim() || '익명';
+            const text = textInput.value.trim();
+
+            if (!text) {
+                showToast('감상평 내용을 입력해주세요.');
+                return;
+            }
+
+            if (!poem.comments) poem.comments = [];
+            poem.comments.push({ author, text });
+
+            textInput.value = '';
+            saveAndSyncData();
+            renderComments(poem);
+            showToast('감상평이 수록되었습니다. 💬');
+        }
+
+        function parseCSV(text) {
+            const lines = [];
+            let line = '';
+            let inQuotes = false;
+            
+            for (let i = 0; i < text.length; i++) {
+                const char = text[i];
+                if (char === '"') {
+                    inQuotes = !inQuotes;
+                    line += char;
+                } else if ((char === '\n' || char === '\r') && !inQuotes) {
+                    if (line.trim()) lines.push(line.trim());
+                    line = '';
+                    if (char === '\r' && text[i+1] === '\n') i++;
+                } else {
+                    line += char;
+                }
+            }
+            if (line.trim()) lines.push(line.trim());
+
+            if (lines.length < 2) return [];
+
+            const result = [];
+            for (let i = 1; i < lines.length; i++) {
+                const rawLine = lines[i];
+                const row = [];
+                let field = '';
+                let inside = false;
+
+                for (let j = 0; j < rawLine.length; j++) {
+                    const c = rawLine[j];
+                    if (c === '"') {
+                        inside = !inside;
+                    } else if (c === ',' && !inside) {
+                        row.push(field.trim().replace(/^"|"$/g, '').replace(/""/g, '"'));
+                        field = '';
+                    } else {
+                        field += c;
+                    }
+                }
+                row.push(field.trim().replace(/^"|"$/g, '').replace(/""/g, '"'));
+
+                // Header order: 성명, 제목, 내가 담은 사회문화적 배경, 시, 시화, 관련단어
+                if (row.length >= 2 && row[0] && row[1]) {
+                    result.push({
+                        id: `sheet_${i}_${Date.now()}`,
+                        author: row[0] || '익명 작가',
+                        title: row[1] || '제목 없음',
+                        background: row[2] || '작가가 적은 사회문화적 배경 설명이 준비 중입니다.',
+                        text: (row[3] || '').replace(/\\n/g, '\n'),
+                        img: row[4] || 'https://images.unsplash.com/photo-1579783900882-c0d3dad7b119?auto=format&fit=crop&w=800&q=80',
+                        tags: row[5] ? row[5].split(';').map(t => t.trim()).filter(Boolean) : ['시화전'],
+                        likes: 0,
+                        comments: []
+                    });
+                }
+            }
+            return result;
+        }
+
+        async function loadGoogleSheetData() {
+            const urlInput = document.getElementById('sheetUrlInput');
+            const url = urlInput.value.trim();
+
+            if (!url) {
+                showToast('구글 시트 CSV URL을 입력해주세요.');
+                return;
+            }
+
+            try {
+                showToast('구글 시트에서 데이터를 불러오는 중...');
+                const response = await fetch(url);
+                if (!response.ok) {
+                    throw new Error(`HTTP 오류! 상태 코드: ${response.status}`);
+                }
+                const csvText = await response.text();
+                const parsedData = parseCSV(csvText);
+
+                if (parsedData.length === 0) {
+                    showToast('불러올 수 있는 유효한 데이터가 없습니다. CSV 양식을 확인해 주세요.');
+                    return;
+                }
+
+                poemsData = parsedData;
+                saveAndSyncData();
+                renderGallery();
+                closeSheetModal();
+                showToast(`🎉 총 ${parsedData.length}개의 시화 작품이 성공적으로 동기화되었습니다!`);
+            } catch (err) {
+                console.error(err);
+                showToast('구글 시트를 불러오는데 실패했습니다. URL과 [웹에 게시] 설정을 확인해주세요.');
+            }
+        }
+
+        function downloadCSVTemplate() {
+            const csvContent = "data:text/csv;charset=utf-8,\uFEFF" + 
+                "성명,제목,내가 담은 사회문화적 배경,시,시화,관련단어\n" +
+                "김민준,지구가 흘리는 눈물,기후변화와 환경 오염 문제의 심각성을 알리고자 함,햇살이 눈부신 날\\n지구가 슬프게 웁니다.,https://images.unsplash.com/photo-1518173946687-a4c8a383392e,환경/기후;자연\n";
+            
+            const encodedUri = encodeURI(csvContent);
+            const link = document.createElement("a");
+            link.setAttribute("href", encodedUri);
+            link.setAttribute("download", "우리들의_시화전_데이터_양식.csv");
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            showToast('CSV 양식이 다운로드되었습니다.');
+        }
+
+        function handleAddPoem(e) {
+            e.preventDefault();
+            const author = document.getElementById('addAuthor').value.trim();
+            const title = document.getElementById('addTitle').value.trim();
+            const background = document.getElementById('addBackground').value.trim();
+            const text = document.getElementById('addText').value.trim();
+            
+            // Use selected image data (Base64 file/AI generated) or fallback URL
+            const img = selectedImgData || document.getElementById('addImg').value.trim() || 'https://images.unsplash.com/photo-1579783900882-c0d3dad7b119?auto=format&fit=crop&w=800&q=80';
+            
+            const tagsRaw = document.getElementById('addTags').value.trim();
+            const tags = tagsRaw ? tagsRaw.split(',').map(t => t.trim()).filter(Boolean) : ['학생작품'];
+
+            const newPoem = {
+                id: 'custom_' + Date.now(),
+                author,
+                title,
+                background,
+                text,
+                img,
+                tags,
+                likes: 0,
+                comments: []
+            };
+
+            poemsData.unshift(newPoem);
+            saveAndSyncData();
+            renderGallery();
+            closeAddModal();
+            
+            // Reset Form & Preview
+            document.getElementById('addPoemForm').reset();
+            clearSelectedImg();
+            
+            showToast('새 시화 작품이 성공적으로 등록되었습니다! 🎉');
+        }
+    </script>
+</body>
+</html>
